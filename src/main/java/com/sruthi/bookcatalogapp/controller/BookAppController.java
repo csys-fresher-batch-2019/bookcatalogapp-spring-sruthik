@@ -21,7 +21,7 @@ import com.sruthi.bookcatalogapp.dto.Messagedto;
 @RequestMapping("api")
 public class BookAppController {
 	@Autowired
-	UserDAO dao;// = DAOFactory.getUserDAO();
+	UserDAO dao;
 	@Autowired
 	TitleDAO dao1;// = DAOFactory.getTitleDAO();
 	
