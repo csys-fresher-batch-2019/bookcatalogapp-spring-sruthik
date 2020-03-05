@@ -12,7 +12,7 @@
 <tr>
 
 	<td>${book.pubId}</td>
-	<td>${book.pubName}</td>
+	<td><a href= "Publisher?pub_name=${book.pubName}">${book.pubName}</a></td>
 	<td>${book.pubMailId}</td>
 	<td>${book.pubPhNo}</td>
 

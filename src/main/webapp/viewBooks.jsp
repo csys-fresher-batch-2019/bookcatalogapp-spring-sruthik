@@ -15,34 +15,30 @@
 </br>
 <center>
 <body background="assets/images/r1.jpg" class="b">
+<c:forEach items="${output}" var="book">
+
 <% ArrayList<Title> a = (ArrayList)request.getAttribute("output");
 %>
 <font size="5" >
 <table border="1"style="font-size: 25">
 
+
+</c:forEach>
 <thead><tr><th> Title-Id </th><th> Publisher-Id </th><th> Author-Id </th><th> Subject-Id </th><th> Title </th><th> Version </th> <th> Price( in Rs)</th><th>Published Date</th></tr></thead>
 <tbody >
-<%
-
-for (Title title : a) {%>
-       
-	<tr>
-	<td><%= title.getTitleId() %></td>
-	<td><%= title.getPubId() %></td>
-	<td><%= title.getAuthorId() %></td>
-	<td><%= title.getSubId() %></td>
-	<td> <%= title.getTitle() %></td>
-	<td><%= title.getVersionNumber() %></td>
-	<td><%= title.getPrice() %></td>
-	<td><%= title.getPubDate() %></td>
-	
-	</tr>
-	
-<%}
+<tr>
+	<td>${book.titleId}</td>
+	<td>${book.pubId}</td>
+	<td>${book.authorId}</td>
+	<td>${book.subId}</td>
+	<td>${book.title}</td>
+	<td>${book.versionNumber}</td>
+	<td>${book.price}</td>
+	<td>${book.pubDate}</td>
 
 
 
-%>
+
 
 </tbody>
 </table>

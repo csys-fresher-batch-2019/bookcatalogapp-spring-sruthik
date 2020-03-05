@@ -15,17 +15,14 @@
 <thead><th>Subject-Id</th><th>Subject-Name</th></thead>
 
 <body>
-<% ArrayList<Subject> a = (ArrayList)request.getAttribute("output");
-%>
-<tbody>
-<%
-for(Subject sub:a){%>
+<c:forEach items="${output}" var="book">
 <tr>
-	<td> <%=sub.getSubId() %></td>
-	<td> <a href= "Subject?sub_name=<%=sub.getSubName() %>"><%=sub.getSubName() %></a></td>
-	</tr>
-<%}
-%>
+	<td>${book.subId}</td>
+	<td><a href= "Subject?sub_name=${book.subName}">${book.subName}</a></td>
+	
+</c:forEach>
+<tbody>
+
 </body>
 </center>
 </html>

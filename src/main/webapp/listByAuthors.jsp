@@ -19,10 +19,9 @@
 <c:forEach items="${output}" var="book">
 <tr>
 	<td>${book.authorId}</td>
-	<td>${book.authorName}</td>
+	<td><a href= "Author?author_name=${book.authorName}">${book.authorName}</a></td>
 	<td>${book.authorMailId}</td>
 	<td>${book.authorPhNo}</td>
-
 </c:forEach>
 
 <tbody>
