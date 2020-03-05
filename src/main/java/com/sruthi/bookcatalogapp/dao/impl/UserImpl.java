@@ -13,13 +13,15 @@ import org.springframework.stereotype.Repository;
 
 import com.sruthi.bookcatalogapp.dao.UserDAO;
 import com.sruthi.bookcatalogapp.domain.Users;
+import com.sruthi.bookcatalogapp.exception.DBException;
+import com.sruthi.bookcatalogapp.exception.ErrorConstant;
 import com.sruthi.bookcatalogapp.util.ConnectionUtil;
 
 @Repository
 public class UserImpl implements UserDAO {
 	private static final Logger logger = LoggerFactory.getLogger(UserImpl.class);
 	@Override
-	public List<Users> displayUsers() {
+	public List<Users> displayUsers() throws DBException {
 		List<Users> list = new ArrayList<>();
 		String sql = "Select * from Users";
 		
@@ -44,14 +46,15 @@ public class UserImpl implements UserDAO {
 				
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_SELECT);
 		}
 		return list;
 	}
 
 	@Override
-	public int addUser(Users user) {
+	public int addUser(Users user) throws DBException {
 			int rows = 0;
 			String sql = "insert into Users(user_name,user_mail_id,set_password,confirm_password,ph_no)values(?,?,?,?,?)";
 			
@@ -66,9 +69,10 @@ public class UserImpl implements UserDAO {
 				 rows = pst.executeUpdate();
 				logger.info("No of rows inserted:"+rows);
 			} catch (Exception e) {
-				e.printStackTrace();
+				
 				
 				logger.debug(e.getMessage());
+				throw new DBException(ErrorConstant.INVALID_ADD);
 			}
 			return rows;
 		}

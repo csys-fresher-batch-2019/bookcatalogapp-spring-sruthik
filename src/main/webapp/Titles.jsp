@@ -1,3 +1,5 @@
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html5>
 <html>
 
@@ -33,13 +35,13 @@ font-size: 30;
 
 </style>
 
-<a href="listByPublishers.jsp" class="button">View Publishers</a>
+<a href="ViewPublishers" class="button">View Publishers</a>
 
-<a href="listByAuthors.jsp" class="button">View Authors</a>
+<a href="ViewAuthors" class="button">View Authors</a>
 
-<a href="Subjects.jsp" class="button"> View Languages</a>
+<a href="ViewSubjects" class="button"> View Languages</a>
 
-<a href="viewBooks.jsp" class="button">View Books </a>
+<a href="ViewBooks" class="button">View Books </a>
 
 <a href="gallery.jsp" class="button">Book Gallery</a>
 

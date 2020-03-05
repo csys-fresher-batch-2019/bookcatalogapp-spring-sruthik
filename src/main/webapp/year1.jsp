@@ -1,8 +1,10 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="com.sruthi.bookcatalogapp.domain.Title"%>
 <%@page import="java.util.List"%>
-<%@page import="com.sruthi.bookcatalogapp.factory.DAOFactory"%>
-<%@page import="com.sruthi.bookcatalogapp.dao.TitleDAO"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,9 +20,8 @@ font-size: 25;
 <center>
 <body background="assets/images/r1.jpg" class="b">
 <%
-List<Title> list2 = (List<Title>) request.getAttribute("TITLE_LIST");
+ ArrayList<Title> a = (ArrayList)request.getAttribute("output");%>
 
-%>
 
 <font size="5" >
 
@@ -29,7 +30,7 @@ List<Title> list2 = (List<Title>) request.getAttribute("TITLE_LIST");
 <thead><tr><th>Publisher-Id</th><th>Author-Id</th><th>Subject-Id</th><th> Title </th> <th> Price( in Rs)</th><th>Version number</th></thead>
 <tbody>
 <%
-for (Title title : list2) {%>
+for (Title title : a) {%>
 	<tr>
 	<td><%=title.getPubId() %></td>
 	<td><%= title.getAuthorId() %></td>

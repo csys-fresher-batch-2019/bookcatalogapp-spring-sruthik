@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -16,7 +17,7 @@ font-size: 25;
 
 <center>
 <body background="assets/images/r1.jpg" class="b">
-<form action = "CourseId.jsp"class="a">
+<form action = "ViewTitleByCourse"class="a">
 Enter Course-id : <input type="number" name="CourseId">
 <button type="submit" >Submit</button>
 </form>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sruthi.bookcatalogapp.dao.TitleDAO;
 import com.sruthi.bookcatalogapp.domain.Title;
+import com.sruthi.bookcatalogapp.exception.DBException;
 import com.sruthi.bookcatalogapp.factory.DAOFactory;
 
 @SuppressWarnings("serial")
@@ -48,9 +49,11 @@ public class AddTitleServlet extends HttpServlet {
 		TitleDAO dao = DAOFactory.getTitleDAO();
 		
 		boolean status = false;
-		List<Title> list = dao.displayTitleWithPrice();
+		List<Title> list;
 		try {
-			
+			list = dao.displayTitleWithPrice();
+		
+		
 			for (Title ti : list) {
 				
 				int pub = ti.getPubId();
@@ -79,13 +82,15 @@ public class AddTitleServlet extends HttpServlet {
 			dao.addTitle(t);
 			response.sendRedirect("sort.jsp");
 		}
+		}
 
-	} catch (Exception e) {
+	 catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 
 			
 	}
-
 }
+
+

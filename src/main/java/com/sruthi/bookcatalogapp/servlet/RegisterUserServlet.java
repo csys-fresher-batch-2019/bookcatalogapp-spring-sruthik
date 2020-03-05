@@ -15,6 +15,7 @@ import com.sruthi.bookcatalogapp.dao.PublisherDAO;
 import com.sruthi.bookcatalogapp.dao.UserDAO;
 import com.sruthi.bookcatalogapp.domain.Publisher;
 import com.sruthi.bookcatalogapp.domain.Users;
+import com.sruthi.bookcatalogapp.exception.DBException;
 import com.sruthi.bookcatalogapp.factory.DAOFactory;
 
 @WebServlet("/RegisterUserServlet")
@@ -55,8 +56,11 @@ public class RegisterUserServlet extends HttpServlet {
 			u.setPhNo(phno);
 			System.out.println("Registered Successfully!!");
 			UserDAO dao = DAOFactory.getUserDAO();
-			List<Users> list = dao.displayUsers();
+			List<Users> list;
 			try {
+				list = dao.displayUsers();
+			
+			
 				System.out.println(u);
 				for (Users user : list) {
 					String name = user.getUserName();

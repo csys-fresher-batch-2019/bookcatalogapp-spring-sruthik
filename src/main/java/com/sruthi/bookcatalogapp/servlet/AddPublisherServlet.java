@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sruthi.bookcatalogapp.dao.PublisherDAO;
 import com.sruthi.bookcatalogapp.domain.Publisher;
 import com.sruthi.bookcatalogapp.domain.Users;
+import com.sruthi.bookcatalogapp.exception.DBException;
 import com.sruthi.bookcatalogapp.factory.DAOFactory;
 
 @WebServlet("/AddPublisherServlet")
@@ -29,16 +30,20 @@ public class AddPublisherServlet extends HttpServlet {
 		p.setPubPhNo(ph);
 		PublisherDAO dao = DAOFactory.getPublisherDAO();
 		boolean status = false;
-		List<Publisher> list = dao.displayPubId();
+		List<Publisher> list;
 		try {
+			list = dao.displayPubId();
+		
 			for (Publisher pub : list) {
 				String name=pub.getPubName();
 				String mail = pub.getPubMailId();
 				long no = pub.getPubPhNo();
 				if (name.equals(pubName) || mail.equals(pubMail)|| no == ph) {
 					status = true;
+				} 
 			}
-			}
+		
+
 
 		if(status)
 		{
@@ -53,7 +58,7 @@ public class AddPublisherServlet extends HttpServlet {
 		}
 
 	} catch (Exception e) {
-		// TODO Auto-generated catch block
+		
 		e.printStackTrace();
 	}
 }	

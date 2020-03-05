@@ -15,12 +15,14 @@ import org.springframework.stereotype.Repository;
 
 import com.sruthi.bookcatalogapp.dao.PublisherDAO;
 import com.sruthi.bookcatalogapp.domain.Publisher;
+import com.sruthi.bookcatalogapp.exception.DBException;
+import com.sruthi.bookcatalogapp.exception.ErrorConstant;
 import com.sruthi.bookcatalogapp.util.ConnectionUtil;
 @Repository
 public class PublisherImpl implements PublisherDAO {
 	private static final Logger logger = LoggerFactory.getLogger(PublisherImpl.class);
 	@Override
-	public void addPublisher(Publisher pub)  {
+	public void addPublisher(Publisher pub) throws DBException  {
 		String sql = "insert into publishers(pub_name,pub_mail_id,pub_ph_no)values(?,?,?)";
 		
 		
@@ -35,15 +37,18 @@ public class PublisherImpl implements PublisherDAO {
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows inserted:"+rows);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			
+			throw new DBException(ErrorConstant.INVALID_ADD);
+		}
 					}
-	}
+	
 	
 	
 
 	@Override
-	public void updateMailIdAndPhNo(Publisher pub)  {
+	public void updateMailIdAndPhNo(Publisher pub) throws DBException  {
 		
 		String sql = "update publishers set pub_mail_id = ?,pub_ph_no = ? where pub_id = ?";
 		try(Connection connection = ConnectionUtil.getConnection();
@@ -55,14 +60,15 @@ public class PublisherImpl implements PublisherDAO {
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows updated:"+rows);
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_UPDATE);
 		}
 	}
 	
 
 @Override
-public void deletePublisher(int pubId)  {
+public void deletePublisher(int pubId) throws DBException  {
 	String sql = "Delete publishers where pub_id = ?";
 	try(Connection connection = ConnectionUtil.getConnection();
 			PreparedStatement pst = connection.prepareStatement(sql)
@@ -71,8 +77,9 @@ public void deletePublisher(int pubId)  {
 		int rows = pst.executeUpdate();
 		logger.debug("No of rows deleted:"+rows);
 	} catch (SQLException e) {
-		e.printStackTrace();
+		
 		logger.debug(e.getMessage());
+		throw new DBException(ErrorConstant.INVALID_DELETE);
 	}
 	
 }
@@ -80,7 +87,7 @@ public void deletePublisher(int pubId)  {
 
 
 @Override
-public List<Publisher> displayPubId() {
+public List<Publisher> displayPubId() throws DBException {
 	List<Publisher> list = new ArrayList<>();
 	String sql = "select pub_id,pub_name,pub_mail_id,pub_ph_no from publishers";
 	
@@ -103,8 +110,9 @@ public List<Publisher> displayPubId() {
 		}
 		}
 	} catch (SQLException e) {
-		e.printStackTrace();
+		
 		logger.debug(e.getMessage());
+		throw new DBException(ErrorConstant.INVALID_SELECT);
 	}
     
 	

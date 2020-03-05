@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html5>
 <html>
 <title>Login</title>
@@ -31,11 +31,10 @@ background-attachment: fixed;
 <h2 class="b">Login</h2>
 
 <body background="assets/images/lib2.webp">
-<%String errorMessage = (String)request.getAttribute("errorMessage");
-if(errorMessage !=null)
-{%>
-<font color="red"style="font-style: normal"" class="a"><%=errorMessage%>
-<%}%>
+ <c:if test="${not empty errormessage }">
+<font color="red"style="font-style: normal"" class="a">${errormessage}
+</c:if>
+
 </br>
 </font>
 Enter User Mail-id : <input type = "email" name = "usermail">

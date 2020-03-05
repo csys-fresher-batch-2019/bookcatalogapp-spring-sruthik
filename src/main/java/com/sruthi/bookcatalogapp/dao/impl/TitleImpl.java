@@ -16,6 +16,8 @@ import org.springframework.stereotype.Repository;
 
 import com.sruthi.bookcatalogapp.dao.TitleDAO;
 import com.sruthi.bookcatalogapp.domain.Title;
+import com.sruthi.bookcatalogapp.exception.DBException;
+import com.sruthi.bookcatalogapp.exception.ErrorConstant;
 import com.sruthi.bookcatalogapp.util.ConnectionUtil;
 
 @Repository
@@ -25,7 +27,7 @@ public class TitleImpl implements TitleDAO {
 	private static final String ACTION_2 = "price";
 
 	@Override
-	public void addTitle(Title title) {
+	public void addTitle(Title title) throws DBException {
 		String sql = "insert into titles(pub_id,author_id,sub_id,pub_date,title,version_number,price)values(?,?,?,?,?,?,?)";
 
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -41,13 +43,14 @@ public class TitleImpl implements TitleDAO {
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows inserted:" + rows);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_ADD);
 		}
 	}
 
 	@Override
-	public void changePubDate(Title title) {
+	public void changePubDate(Title title) throws DBException {
 		String sql = "Update titles set pub_date = ? where title = ? and version_number = ?";
 
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -58,13 +61,14 @@ public class TitleImpl implements TitleDAO {
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows updated:" + rows);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_UPDATE);
 		}
 	}
 
 	@Override
-	public List<Title> displayTitleWithPrice() {
+	public List<Title> displayTitleWithPrice() throws DBException {
 		List<Title> list = new ArrayList<>();
 		String sql = "select title,price,version_number,pub_date,title_id,pub_id,author_id,sub_id from titles";
 		try (Connection connection = ConnectionUtil.getConnection(); Statement stmt = connection.createStatement()) {
@@ -97,14 +101,15 @@ public class TitleImpl implements TitleDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_SELECT);
 		}
 		return list;
 	}
 
 	@Override
-	public void deleteTitle(int titleId) {
+	public void deleteTitle(int titleId) throws DBException {
 		String sql = "Delete from titles where title_id = ?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql)) {
@@ -112,12 +117,13 @@ public class TitleImpl implements TitleDAO {
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows deleted:" + rows);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_DELETE);
 		}
 	}
 
-	public List<Title> displayTitleForCourseId(int courseId) {
+	public List<Title> displayTitleForCourseId(int courseId) throws DBException {
 		List<Title> list = new ArrayList<>();
 		String sql = "select pub_id,author_id,sub_id,title,version_number,price,pub_date,course_id from titles t INNER JOIN course_titles c ON t.title_id = c.title_id where course_id = ?";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -146,8 +152,9 @@ public class TitleImpl implements TitleDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_SELECT);
 		}
 
 		return list;
@@ -155,7 +162,7 @@ public class TitleImpl implements TitleDAO {
 	}
 
 	@Override
-	public List<Title> displayYearWiseBooks(LocalDate pubDate) {
+	public List<Title> displayYearWiseBooks(LocalDate pubDate) throws DBException {
 		List<Title> list = new ArrayList<>();
 		String sql = "select pub_id,author_id,sub_id,title,version_number,price from titles where to_char(pub_date,'yyyy') = ?";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -185,8 +192,8 @@ public class TitleImpl implements TitleDAO {
 					logger.debug("title : " + title + "\nVersion number : " + version + "\nPrice : " + price);
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
 				logger.debug(e.getMessage());
+				throw new DBException(ErrorConstant.INVALID_SELECT);
 			}
 		} catch (SQLException e2) {
 
@@ -199,7 +206,7 @@ public class TitleImpl implements TitleDAO {
 	}
 
 	@Override
-	public List<Title> displayBooksPublishedByIndividualPublishers() {
+	public List<Title> displayBooksPublishedByIndividualPublishers() throws DBException {
 
 		List<Title> list = new ArrayList<>();
 		String sql = "select pub_name, count(*) as count from   publishers p, titles t where  p.pub_id = t.pub_id group  by pub_name";
@@ -214,15 +221,15 @@ public class TitleImpl implements TitleDAO {
 
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_SELECT);
 		}
 		return list;
 	}
 
 	@Override
-	public List<Title> displayByRecentBooks() {
+	public List<Title> displayByRecentBooks() throws DBException {
 		List<Title> list = new ArrayList<>();
 		String sql = "select pub_id,author_id,sub_id,title,version_number,price,pub_date from titles order by pub_date desc";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -249,8 +256,9 @@ public class TitleImpl implements TitleDAO {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_SELECT);
 		}
 		return list;
 	}
@@ -284,7 +292,7 @@ public class TitleImpl implements TitleDAO {
 		return list;
 	}
 
-	public List<Title> displayTitleForPubName(String pubName) {
+	public List<Title> displayTitleForPubName(String pubName) throws DBException {
 		List<Title> list = new ArrayList<>();
 		String sql = "select title,version_number,price from titles t INNER JOIN publishers p ON t.pub_id = p.pub_id where pub_name=?";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -308,8 +316,9 @@ public class TitleImpl implements TitleDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_SELECT);
 		}
 
 		return list;
@@ -351,7 +360,7 @@ public class TitleImpl implements TitleDAO {
 	}
 
 	@Override
-	public List<Title> displayTitleForAuthorName(String authorName) {
+	public List<Title> displayTitleForAuthorName(String authorName) throws DBException {
 		List<Title> list = new ArrayList<>();
 		String sql = "select title,version_number,price from titles t INNER JOIN authors1 a ON t.author_id = a.author_id where author_name=?";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -375,15 +384,16 @@ public class TitleImpl implements TitleDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_SELECT);
 		}
 
 		return list;
 
 	}
 
-	public int displayPrice(String title, int version) {
+	public int displayPrice(String title, int version) throws DBException {
 		int price = 0;
 		String sql = "select price from titles where title = ? and version_number = ?";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -403,8 +413,9 @@ public class TitleImpl implements TitleDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_SELECT);
 		}
 		return price;
 

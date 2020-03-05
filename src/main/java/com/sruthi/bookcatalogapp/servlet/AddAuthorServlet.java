@@ -15,6 +15,7 @@ import com.sruthi.bookcatalogapp.domain.Author;
 import com.sruthi.bookcatalogapp.factory.DAOFactory;
 
 
+@SuppressWarnings("serial")
 @WebServlet("/AddAuthorServlet")
 public class AddAuthorServlet extends HttpServlet {
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,18 +29,20 @@ public class AddAuthorServlet extends HttpServlet {
 			a.setAuthorPhNo(ph);
 			AuthorDAO dao = DAOFactory.getAuthorDAO();
 			boolean status = false;
-			List<Author> list = dao.displayNumberOfAuthors();
+			List<Author> list;
 			try {
-				for (Author au: list) {
-					String name=au.getAuthorName();
-					String mail = au.getAuthorMailId();
-					long no = au.getAuthorPhNo();
-					if (name.equals(authorName) || mail.equals(authorMail)|| no == ph) {
-						
-						status = true;
+				list = dao.displayNumberOfAuthors();
+			
+			for (Author au: list) {
+				String name=au.getAuthorName();
+				String mail = au.getAuthorMailId();
+				long no = au.getAuthorPhNo();
+				if (name.equals(authorName) || mail.equals(authorMail)|| no == ph) {
 					
+					status = true;
+				
 				}
-				}
+			}				
 				
 			if(status)
 			{
@@ -53,7 +56,7 @@ public class AddAuthorServlet extends HttpServlet {
 			}
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 	}

@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 
 import com.sruthi.bookcatalogapp.dao.SubjectDAO;
 import com.sruthi.bookcatalogapp.domain.Subject;
+import com.sruthi.bookcatalogapp.exception.DBException;
+import com.sruthi.bookcatalogapp.exception.ErrorConstant;
 import com.sruthi.bookcatalogapp.util.ConnectionUtil;
 
 @Repository
@@ -21,7 +23,7 @@ public class SubjectImpl implements SubjectDAO {
 	private static final Logger logger = LoggerFactory.getLogger(SubjectImpl.class);
 
 	@Override
-	public void addSubject(Subject sub) {
+	public void addSubject(Subject sub) throws DBException {
 		String sql = "insert into subjects(sub_name)values(?)";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql)) {
@@ -30,14 +32,15 @@ public class SubjectImpl implements SubjectDAO {
 			logger.debug("No of rows inserted:" + rows);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_ADD);
 		}
 
 	}
 
 	@Override
-	public List<Subject> displaySubjectwiseTitles() {
+	public List<Subject> displaySubjectwiseTitles() throws DBException {
 		List<Subject> list = new ArrayList<>();
 
 		String sql = "select sub_id,sub_name from subjects";
@@ -58,15 +61,15 @@ public class SubjectImpl implements SubjectDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_ADD);
 		}
 
 		return list;
 	}
 
 	@Override
-	public void updateSubject(Subject sub) {
+	public void updateSubject(Subject sub) throws DBException {
 		String sql = "update subjects set sub_name = ?where sub_id = ?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql)) {
@@ -75,14 +78,15 @@ public class SubjectImpl implements SubjectDAO {
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows updated:" + rows);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_UPDATE);
 		}
 
 	}
 
 	@Override
-	public void deleteSubject(int subId) {
+	public void deleteSubject(int subId) throws DBException {
 		String sql = "Delete from subjects where sub_id = ?";
 
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -91,8 +95,9 @@ public class SubjectImpl implements SubjectDAO {
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows deleted:" + rows);
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			logger.debug(e.getMessage());
+			throw new DBException(ErrorConstant.INVALID_DELETE);
 		}
 
 	}

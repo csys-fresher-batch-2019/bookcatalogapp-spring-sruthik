@@ -1,22 +1,22 @@
-
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.sruthi.bookcatalogapp.domain.Title"%>
-<%@page import="com.sruthi.bookcatalogapp.factory.DAOFactory"%>
-<%@page import="com.sruthi.bookcatalogapp.dao.TitleDAO"%>
 <html>
 
 <title>BookCatalogue</title>
 
 
-<% TitleDAO dao = DAOFactory.getTitleDAO();
-List<Title> list = dao.displayTitleWithPrice();
-%>
+
 
 <jsp:include page="Titles.jsp"></jsp:include>
 </br>
 <center>
 <body background="assets/images/r1.jpg" class="b">
+<% ArrayList<Title> a = (ArrayList)request.getAttribute("output");
+%>
 <font size="5" >
 <table border="1"style="font-size: 25">
 
@@ -24,7 +24,7 @@ List<Title> list = dao.displayTitleWithPrice();
 <tbody >
 <%
 
-for (Title title : list) {%>
+for (Title title : a) {%>
        
 	<tr>
 	<td><%= title.getTitleId() %></td>

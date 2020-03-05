@@ -1,16 +1,13 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.sruthi.bookcatalogapp.domain.Subject"%>
 <%@page import="java.util.List"%>
-<%@page import="com.sruthi.bookcatalogapp.factory.DAOFactory"%>
-<%@page import="com.sruthi.bookcatalogapp.dao.SubjectDAO"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html5>
 
 <title>list By Subjects</title>
 
-<%
-SubjectDAO dao = DAOFactory.getSubjectDAO();
-List<Subject> list = dao.displaySubjectwiseTitles();
-%>
+
 <jsp:include page="Titles.jsp"></jsp:include>
 </br>
 <center>
@@ -18,12 +15,14 @@ List<Subject> list = dao.displaySubjectwiseTitles();
 <thead><th>Subject-Id</th><th>Subject-Name</th></thead>
 
 <body>
+<% ArrayList<Subject> a = (ArrayList)request.getAttribute("output");
+%>
 <tbody>
 <%
-for(Subject sub:list){%>
+for(Subject sub:a){%>
 <tr>
 	<td> <%=sub.getSubId() %></td>
-	<td> <a href= "viewSubjectBooks.jsp?sub_name=<%=sub.getSubName() %>"><%=sub.getSubName() %></a></td>
+	<td> <a href= "Subject?sub_name=<%=sub.getSubName() %>"><%=sub.getSubName() %></a></td>
 	</tr>
 <%}
 %>

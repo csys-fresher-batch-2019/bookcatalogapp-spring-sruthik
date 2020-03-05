@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 
 import com.sruthi.bookcatalogapp.dao.CourseTitleDAO;
 import com.sruthi.bookcatalogapp.domain.CourseTitles;
+import com.sruthi.bookcatalogapp.exception.DBException;
+import com.sruthi.bookcatalogapp.exception.ErrorConstant;
 import com.sruthi.bookcatalogapp.util.ConnectionUtil;
 
 @Repository
@@ -21,7 +23,7 @@ public class CourseTitleImpl implements CourseTitleDAO {
 	private static final Logger logger = LoggerFactory.getLogger(CourseTitleImpl.class);
 
 	@Override
-	public void addCourseTitle(CourseTitles course) {
+	public void addCourseTitle(CourseTitles course) throws DBException {
 
 		String sql = "insert into course_titles(course_id,title_id)values(?,?)";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -31,8 +33,8 @@ public class CourseTitleImpl implements CourseTitleDAO {
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows inserted:" + rows);
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.debug(e.getMessage());
+
+			throw new DBException(ErrorConstant.INVALID_ADD);
 		}
 
 	}
