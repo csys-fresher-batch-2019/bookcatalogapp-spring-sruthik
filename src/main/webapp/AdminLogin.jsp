@@ -22,11 +22,10 @@ background-attachment: fixed;
 <body background="assets/images/lib2.webp" class="b">
 <h3>Admin Login</h3>
 <form action="AdminServlet">
-<%String errorMessage = (String)request.getAttribute("errorMessage");
-if(errorMessage !=null)
-{%>
-<font color="red"style="font-style: normal"" class="a"><%=errorMessage%>
-<%}%>
+<c:if test="${not empty errorMessage}">
+<font color="red" style="font-style: normal"" class="a">${errorMessage}
+		</c:if>
+
 </font>
 </br>
 Enter  Mail-Id : <input type="email" name="adminMail">

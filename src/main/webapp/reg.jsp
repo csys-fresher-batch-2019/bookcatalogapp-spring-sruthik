@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>reg</title>
+<title>register</title>
 </head>
 <style>
 .a{
@@ -21,18 +21,16 @@ background-attachment: fixed;
 <body background="assets/images/lib2.webp">
 <font style="font-family: cursive">
 <h2 class="a">Register</h2>
-<body>
 <form action = "RegisterUserServlet" class="a">
-<%String errorMessage1 = (String)request.getAttribute("errorMessage1");
-if(errorMessage1 !=null)
-{%>
-<font color="red"style="font: bold"" class="a"><%=errorMessage1%>
-<%}%>
-<%String errorMessage = (String)request.getAttribute("errorMessage");
-if(errorMessage !=null)
-{%>
-<font color="red"style="font: bold"" class="a"><%=errorMessage%>
-<%}%>
+<body>
+
+<c:if test="${not empty errormessage1}">
+<font color="red"style="font-style: normal"" class="a">${errormessage1}
+</c:if>
+</font>
+<c:if test="${not empty errormessage }">
+<font color="red"style="font-style: normal"" class="a">${errormessage}
+</c:if>
 </font>
 </br>
 Enter username :<input type="name" name="username" required>

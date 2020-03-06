@@ -15,17 +15,14 @@
 </br>
 <center>
 <body background="assets/images/r1.jpg" class="b">
-<c:forEach items="${output}" var="book">
 
-<% ArrayList<Title> a = (ArrayList)request.getAttribute("output");
-%>
+
+
 <font size="5" >
 <table border="1"style="font-size: 25">
-
-
-</c:forEach>
 <thead><tr><th> Title-Id </th><th> Publisher-Id </th><th> Author-Id </th><th> Subject-Id </th><th> Title </th><th> Version </th> <th> Price( in Rs)</th><th>Published Date</th></tr></thead>
-<tbody >
+<tbody>
+<c:forEach items="${output}" var="book">
 <tr>
 	<td>${book.titleId}</td>
 	<td>${book.pubId}</td>
@@ -35,10 +32,7 @@
 	<td>${book.versionNumber}</td>
 	<td>${book.price}</td>
 	<td>${book.pubDate}</td>
-
-
-
-
+</c:forEach>
 
 </tbody>
 </table>

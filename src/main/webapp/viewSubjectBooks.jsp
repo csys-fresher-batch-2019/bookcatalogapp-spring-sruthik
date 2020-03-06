@@ -19,24 +19,21 @@ font-size: 30;
 </style>
 <center>
 <body background="assets/images/r1.jpg" class="b">
-<% ArrayList<Title> a = (ArrayList)request.getAttribute("output");
-%>
+
 <font size="5" >
 <table border="1"style="font-size: 25">
 <thead><tr><th>Publisher-id</th><th>Author-id</th><th> Title </th><th> Version </th><th> Price( in Rs)</tr></thead>
 <tbody>
-<%
-for (Title title : a) {%>
-	<tr>
-	<td><%= title.getPubId() %>
-	<td><%= title.getAuthorId() %>
-	<td><%= title.getTitle() %></td>
-	<td><%= title.getVersionNumber() %></td>
-	<td><%= title.getPrice() %></td>
+<c:forEach items="${output}" var="book">
+<tr>
+	<td>${book.pubId}</td>
+	<td>${book.authorId}</td>
+	<td>${book.title}</td>
+	<td>${book.versionNumber}</td>
+	<td>${book.price}</td>
 	
-	</tr>
-<%}
-%>
+</c:forEach>
+
 
 </tbody>
 </table>

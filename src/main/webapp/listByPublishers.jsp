@@ -6,6 +6,7 @@
 <html>
 <center>
 <table border = "1"style="font-size: 25">
+<thead><th>Publisher-Id</th><th>Publisher-Name</th><th>Publisher-MailId</th><th>Publisher-PhoneNo</th></thead>
 
 <body><h1></h1>
 <c:forEach items="${output}" var="book">
@@ -22,7 +23,6 @@
 <jsp:include page="Titles.jsp"></jsp:include>
 </br>
 
-<thead><th>Publisher-Id</th><th>Publisher-Name</th><th>Publisher-MailId</th><th>Publisher-PhoneNo</th></thead>
 <tbody>
 
 <tbody>

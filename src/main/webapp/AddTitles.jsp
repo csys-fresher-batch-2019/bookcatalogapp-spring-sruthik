@@ -40,11 +40,9 @@ Enter Version : <input type="number" name="version" required>
 Enter Price (in Rs): <input type="number" name="price" required>
 <br/>
 
-<%String errorMessage2 = (String)request.getAttribute("errorMessage2");
-if(errorMessage2 !=null)
-{%>
-<font color="red"style="font-style: normal"" class="a"><%=errorMessage2%>
-<%}%>
+<c:if test="${not empty errorMessage2}">
+<font color="red" style="font-style: normal"" class="a">${errorMessage2}
+		</c:if>
 </br>
 <button type="submit" class="b">submit</button>
 

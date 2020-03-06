@@ -16,11 +16,10 @@ font-size: 25;
 <center>
 <body background="assets/images/r1.jpg" class="b">
 <form action="AddPublisherServlet">
-<%String errorMessage2 = (String)request.getAttribute("errorMessage2");
-if(errorMessage2 !=null)
-{%>
-<font color="red"style="font-style: normal"" class="a"><%=errorMessage2%>
-<%}%>
+<c:if test="${not empty errorMessage2}">
+<font color="red" style="font-style: normal"" class="a">${errorMessage2}
+		</c:if>
+
 </br>
 </font>
 
