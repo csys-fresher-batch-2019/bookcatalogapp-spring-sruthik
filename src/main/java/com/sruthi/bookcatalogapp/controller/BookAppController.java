@@ -41,7 +41,7 @@ public class BookAppController {
 	
 	@GetMapping("/Register")
 	
-	public Messagedto Register(@RequestParam("username") String name,@RequestParam("mailId") String mail,@RequestParam("password") String pass,@RequestParam("cpassword") String cpass,@RequestParam("phNo") long phno) throws DBException {
+	public Messagedto Register(@RequestParam("username") String name,@RequestParam("mailId") String mail,@RequestParam("password") String pass,@RequestParam("cpassword") String cpass,@RequestParam("phNo") long phno) {
 		Messagedto msg = new Messagedto();
 		Users u = new Users();
 		u.setUserName(name);
@@ -50,7 +50,13 @@ public class BookAppController {
 		u.setConfirmPassword(cpass);
 		u.setPhNo(phno);
 			
-			 int v = dao.addUser(u);
+			 int v=0;
+			try {
+				v = dao.addUser(u);
+			} catch (DBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			 if(v == 1) {
 				 msg.setInfoMessage("Registered Successfully!!");
 			 }
@@ -59,24 +65,42 @@ public class BookAppController {
 				 msg.setErrorMessage("Registration Failed");
 			 }
 				 
-	
+	System.out.println(msg);
 		return msg;
 	         
 }
 	@GetMapping("/displayUsers")
-	public List<Users> displayUsers() throws DBException{
+	public List<Users> displayUsers() {
 		
-		List<Users> user = dao.displayUsers();
+		List<Users> user=null;
+		try {
+			user = dao.displayUsers();
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return user;
 	}
 	@GetMapping("/displayTitles")
-	public List<Title> displayTitles() throws DBException{
-		List<Title> title = dao1.displayTitleWithPrice();
+	public List<Title> displayTitles() {
+		List<Title> title=null;
+		try {
+			title = dao1.displayTitleWithPrice();
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return title;
 	}
 	@GetMapping("/displayTitleForCourseId")
-	public List<Title> displayTitleForCourseId(@RequestParam("courseId") int id) throws DBException{
-		List<Title> c = dao1.displayTitleForCourseId(id);
+	public List<Title> displayTitleForCourseId(@RequestParam("courseId") int id) {
+		List<Title> c=null;
+		try {
+			c = dao1.displayTitleForCourseId(id);
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return c;
 	}
 	@GetMapping("/Login")
@@ -117,19 +141,37 @@ public List<Publisher> viewPublishers() throws DBException{
 		}
 	
 	@GetMapping("/viewSubject")
-	public List<Subject> viewSubject() throws DBException{
-		List<Subject> s = dao4.displaySubjectwiseTitles();
+	public List<Subject> viewSubject() {
+		List<Subject> s=null;
+		try {
+			s = dao4.displaySubjectwiseTitles();
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return s;	
 	}
 	@GetMapping("/recentBooks")
-	public List<Title> recentBooks() throws DBException{
-		List<Title> r = dao1.displayByRecentBooks();
+	public List<Title> recentBooks() {
+		List<Title> r=null;
+		try {
+			r = dao1.displayByRecentBooks();
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return r;
 	}
 	@GetMapping("/displayBooksYearwise")
-	public List<Title> displayBooksYearwise(@RequestParam("date") String pubDate) throws DBException{
+	public List<Title> displayBooksYearwise(@RequestParam("date") String pubDate) {
 		LocalDate d = LocalDate.parse(pubDate);
-		List<Title> r = dao1.displayYearWiseBooks(d);
+		List<Title> r=null;
+		try {
+			r = dao1.displayYearWiseBooks(d);
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return r;
 	}
 	

@@ -38,51 +38,49 @@ public class RegisterUserServlet extends HttpServlet {
 		// System.out.println("Confirm Password : "+cpassword);
 		// System.out.println("Enter Phone-no : "+phNo);
 		Users u = new Users();
-		System.out.println("Enter Username: " + username);
 		u.setUserName(username);
-		System.out.println("Enter UserMail-Id: " + mailId);
 		u.setUserMailId(mailId);
-		System.out.println("Enter Password: " + password);
-
+		u.setPhNo(phno);
 		u.setSetPassword(password);
-		System.out.println("Confirm Password: " + cpassword);
 
 		u.setConfirmPassword(cpassword);
-		System.out.println("Enter Phone-number: " + phno);
+		
+		System.out.println(u);
 
 		boolean equals = password.equals(cpassword);
-        boolean status = false;
+		boolean status = false;
 		if (equals) {
-			u.setPhNo(phno);
+			
 			System.out.println("Registered Successfully!!");
 			UserDAO dao = DAOFactory.getUserDAO();
 			List<Users> list;
 			try {
 				list = dao.displayUsers();
-			
-			
-				System.out.println(u);
+
+				
 				for (Users user : list) {
+					System.out.println(user);
 					String name = user.getUserName();
 					String mail = user.getUserMailId();
 					long ph = user.getPhNo();
-					if (name.equals(username)||mail.equals(mailId)|| ph == phno) {
+					if (name.equals(username) || mail.equals(mailId) || ph == phno) {
 						status = true;
-					} 
+						
+					}
 				}
-				if(status)
-				{
+				System.out.println("STatyus:" + status);
+				
+				if (status) {
 					request.setAttribute("errorMessage1", "Registered already!! Please login...");
 					RequestDispatcher dispatcher1 = request.getRequestDispatcher("reg.jsp");
 					dispatcher1.forward(request, response);
-				}
-				else {
+				} else {
 					dao.addUser(u);
+					System.out.println("Successfully added");
 					response.sendRedirect("sort.jsp");
 				}
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
