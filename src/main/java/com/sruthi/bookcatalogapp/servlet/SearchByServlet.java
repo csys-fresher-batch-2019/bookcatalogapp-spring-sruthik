@@ -1,21 +1,20 @@
 package com.sruthi.bookcatalogapp.servlet;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.sruthi.bookcatalogapp.dao.TitleDAO;
 import com.sruthi.bookcatalogapp.domain.Title;
 import com.sruthi.bookcatalogapp.exception.DBException;
 import com.sruthi.bookcatalogapp.factory.DAOFactory;
+
+@SuppressWarnings("serial")
 @WebServlet("/SearchByServlet")
 public class SearchByServlet extends HttpServlet {
 
@@ -31,7 +30,7 @@ public class SearchByServlet extends HttpServlet {
 				System.out.println("Recent Books are...");
 
 				TitleDAO dao = DAOFactory.getTitleDAO();
-				List<Title> list = dao.displayByRecentBooks();
+				List<Title> list = dao.findByRecentBooks();
 				request.setAttribute("RECENT_BOOKS", list);
 				nextPage = "RecentBooks";
 			} catch (Exception e) {
@@ -46,7 +45,7 @@ public class SearchByServlet extends HttpServlet {
 				String courseId = request.getParameter("CourseId");
 				int id = Integer.valueOf(courseId);
 				System.out.println(id);
-				List<Title> list1 = dao1.displayTitleForCourseId(id);
+				List<Title> list1 = dao1.findByCourseId(id);
 				request.setAttribute("COURSE", list1);
 				nextPage = "Course.jsp";
 
@@ -66,7 +65,7 @@ public class SearchByServlet extends HttpServlet {
 				String year = request.getParameter("date");
 				LocalDate date = LocalDate.parse(year);
 				System.out.println(date);
-				List<Title> list2 = dao2.displayYearWiseBooks(date);
+				List<Title> list2 = dao2.findByYear(date);
 				request.setAttribute("TITLE_LIST", list2);
 				nextPage = "Year";
 			} catch (Exception e) {
@@ -80,7 +79,6 @@ public class SearchByServlet extends HttpServlet {
 		case "YEAR": {
 			try {
 
-				
 				nextPage = "year.jsp";
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

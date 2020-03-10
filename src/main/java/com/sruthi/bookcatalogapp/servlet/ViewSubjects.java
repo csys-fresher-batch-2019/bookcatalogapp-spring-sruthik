@@ -16,32 +16,25 @@ import com.sruthi.bookcatalogapp.dao.SubjectDAO;
 import com.sruthi.bookcatalogapp.domain.Subject;
 import com.sruthi.bookcatalogapp.exception.DBException;
 
-
-
 @SuppressWarnings("serial")
 @WebServlet("/ViewSubjects")
 public class ViewSubjects extends HttpServlet {
 	@Autowired
-	SubjectDAO dao ;
-		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			    
-				
-					try {
-						
-						List<Subject> list = dao.displaySubjectwiseTitles();
-						request.setAttribute("output", list);
-						RequestDispatcher dispatcher = request.getRequestDispatcher("Subjects.jsp");
-						dispatcher.forward(request, response);
-					} catch (DBException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-		
-				
-			
-			}
-			
-	
+	SubjectDAO dao;
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
+		try {
+
+			List<Subject> list = dao.findAll();
+			request.setAttribute("output", list);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("Subjects.jsp");
+			dispatcher.forward(request, response);
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

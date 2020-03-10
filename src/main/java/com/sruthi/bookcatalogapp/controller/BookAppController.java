@@ -52,7 +52,7 @@ public class BookAppController {
 			
 			 int v=0;
 			try {
-				v = dao.addUser(u);
+				v = dao.save(u);
 			} catch (DBException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -74,7 +74,7 @@ public class BookAppController {
 		
 		List<Users> user=null;
 		try {
-			user = dao.displayUsers();
+			user = dao.findAll();
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,7 +85,7 @@ public class BookAppController {
 	public List<Title> displayTitles() {
 		List<Title> title=null;
 		try {
-			title = dao1.displayTitleWithPrice();
+			title = dao1.findAll();
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,7 +96,7 @@ public class BookAppController {
 	public List<Title> displayTitleForCourseId(@RequestParam("courseId") int id) {
 		List<Title> c=null;
 		try {
-			c = dao1.displayTitleForCourseId(id);
+			c = dao1.findByCourseId(id);
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,14 +129,14 @@ public class BookAppController {
 	}
 	@GetMapping("/viewPublishers")
 public List<Publisher> viewPublishers() throws DBException{
-	List<Publisher> p = dao2.displayPubId();
+	List<Publisher> p = dao2.findAll();
 	return p;
 	
 	
 }
 	@GetMapping("/viewAuthors")
 	public List<Author> viewAuthors() throws DBException{
-		List<Author> a = dao3.displayNumberOfAuthors();
+		List<Author> a = dao3.findAll();
 		return a;
 		}
 	
@@ -144,7 +144,7 @@ public List<Publisher> viewPublishers() throws DBException{
 	public List<Subject> viewSubject() {
 		List<Subject> s=null;
 		try {
-			s = dao4.displaySubjectwiseTitles();
+			s = dao4.findAll();
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -155,7 +155,7 @@ public List<Publisher> viewPublishers() throws DBException{
 	public List<Title> recentBooks() {
 		List<Title> r=null;
 		try {
-			r = dao1.displayByRecentBooks();
+			r = dao1.findByRecentBooks();
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -167,7 +167,7 @@ public List<Publisher> viewPublishers() throws DBException{
 		LocalDate d = LocalDate.parse(pubDate);
 		List<Title> r=null;
 		try {
-			r = dao1.displayYearWiseBooks(d);
+			r = dao1.findByYear(d);
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

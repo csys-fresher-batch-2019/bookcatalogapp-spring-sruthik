@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.sruthi.bookcatalogapp.dao.PublisherDAO;
 import com.sruthi.bookcatalogapp.domain.Publisher;
 import com.sruthi.bookcatalogapp.exception.DBException;
+@SuppressWarnings("serial")
 @WebServlet("/ViewPublishers")
 public class ViewPublishers extends HttpServlet {
 	@Autowired
@@ -22,7 +23,7 @@ public class ViewPublishers extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
-			List<Publisher> list = dao.displayPubId();
+			List<Publisher> list = dao.findAll();
 			request.setAttribute("output", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("listByPublishers.jsp");
 			dispatcher.forward(request, response);

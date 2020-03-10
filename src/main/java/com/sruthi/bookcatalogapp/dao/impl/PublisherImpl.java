@@ -22,7 +22,7 @@ import com.sruthi.bookcatalogapp.util.ConnectionUtil;
 public class PublisherImpl implements PublisherDAO {
 	private static final Logger logger = LoggerFactory.getLogger(PublisherImpl.class);
 	@Override
-	public void addPublisher(Publisher pub) throws DBException  {
+	public void save(Publisher pub) throws DBException  {
 		String sql = "insert into publishers(pub_name,pub_mail_id,pub_ph_no)values(?,?,?)";
 		
 		
@@ -48,7 +48,7 @@ public class PublisherImpl implements PublisherDAO {
 	
 
 	@Override
-	public void updateMailIdAndPhNo(Publisher pub) throws DBException  {
+	public void update(Publisher pub) throws DBException  {
 		
 		String sql = "update publishers set pub_mail_id = ?,pub_ph_no = ? where pub_id = ?";
 		try(Connection connection = ConnectionUtil.getConnection();
@@ -59,7 +59,7 @@ public class PublisherImpl implements PublisherDAO {
 			pst.setInt(3, pub.getPubId());
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows updated:"+rows);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			
 			logger.debug(e.getMessage());
 			throw new DBException(ErrorConstant.INVALID_UPDATE);
@@ -68,7 +68,7 @@ public class PublisherImpl implements PublisherDAO {
 	
 
 @Override
-public void deletePublisher(int pubId) throws DBException  {
+public void delete(int pubId) throws DBException  {
 	String sql = "Delete publishers where pub_id = ?";
 	try(Connection connection = ConnectionUtil.getConnection();
 			PreparedStatement pst = connection.prepareStatement(sql)
@@ -87,7 +87,7 @@ public void deletePublisher(int pubId) throws DBException  {
 
 
 @Override
-public List<Publisher> displayPubId() throws DBException {
+public List<Publisher> findAll() throws DBException {
 	List<Publisher> list = new ArrayList<>();
 	String sql = "select pub_id,pub_name,pub_mail_id,pub_ph_no from publishers";
 	

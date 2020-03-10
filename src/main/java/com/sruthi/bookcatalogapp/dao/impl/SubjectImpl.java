@@ -23,7 +23,7 @@ public class SubjectImpl implements SubjectDAO {
 	private static final Logger logger = LoggerFactory.getLogger(SubjectImpl.class);
 
 	@Override
-	public void addSubject(Subject sub) throws DBException {
+	public void save(Subject sub) throws DBException {
 		String sql = "insert into subjects(sub_name)values(?)";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql)) {
@@ -40,7 +40,7 @@ public class SubjectImpl implements SubjectDAO {
 	}
 
 	@Override
-	public List<Subject> displaySubjectwiseTitles() throws DBException {
+	public List<Subject> findAll() throws DBException {
 		List<Subject> list = new ArrayList<>();
 
 		String sql = "select sub_id,sub_name from subjects";
@@ -69,7 +69,7 @@ public class SubjectImpl implements SubjectDAO {
 	}
 
 	@Override
-	public void updateSubject(Subject sub) throws DBException {
+	public void update(Subject sub) throws DBException {
 		String sql = "update subjects set sub_name = ?where sub_id = ?";
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql)) {
@@ -86,7 +86,7 @@ public class SubjectImpl implements SubjectDAO {
 	}
 
 	@Override
-	public void deleteSubject(int subId) throws DBException {
+	public void delete(int subId) throws DBException {
 		String sql = "Delete from subjects where sub_id = ?";
 
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -94,7 +94,7 @@ public class SubjectImpl implements SubjectDAO {
 			pst.setInt(1, subId);
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows deleted:" + rows);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			
 			logger.debug(e.getMessage());
 			throw new DBException(ErrorConstant.INVALID_DELETE);

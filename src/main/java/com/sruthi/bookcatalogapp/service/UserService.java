@@ -8,8 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.sruthi.bookcatalogapp.dao.UserDAO;
 import com.sruthi.bookcatalogapp.domain.Users;
+import com.sruthi.bookcatalogapp.exception.DBException;
+import com.sruthi.bookcatalogapp.exception.ServiceException;
+import com.sruthi.bookcatalogapp.exception.ValidatorException;
+import com.sruthi.bookcatalogapp.factory.DAOFactory;
 import com.sruthi.bookcatalogapp.util.ConnectionUtil;
+import com.sruthi.bookcatalogapp.validator.Validator;
 
 @Service
 public class UserService {
@@ -17,6 +23,17 @@ public class UserService {
 //	private UserService () {
 //	    throw new IllegalStateException("Utility class");
 //	  }
+public static void registration(Users user) throws ServiceException {
+	UserDAO dao = DAOFactory.getUserDAO();
+		try {
+			Validator.validateRegisterForm(user);
+			dao.save(user);
+		} catch (ValidatorException e) {
+			throw new ServiceException(e.getMessage());
+		} catch (DBException e) {
+			e.printStackTrace();
+		}
+}
 	public static boolean login(Users user) {
 		boolean result = false;
 		try(Connection con = ConnectionUtil.getConnection();CallableStatement stmt=con.prepareCall("{call login_procedure(?,?,?)}")) {
@@ -42,7 +59,6 @@ public class UserService {
 			
 		}
 		return result;
-	
 	}
 	
 	

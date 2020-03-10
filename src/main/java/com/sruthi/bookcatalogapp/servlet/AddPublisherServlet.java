@@ -2,20 +2,18 @@ package com.sruthi.bookcatalogapp.servlet;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.sruthi.bookcatalogapp.dao.PublisherDAO;
 import com.sruthi.bookcatalogapp.domain.Publisher;
-import com.sruthi.bookcatalogapp.domain.Users;
 import com.sruthi.bookcatalogapp.exception.DBException;
 import com.sruthi.bookcatalogapp.factory.DAOFactory;
 
+@SuppressWarnings("serial")
 @WebServlet("/AddPublisherServlet")
 public class AddPublisherServlet extends HttpServlet {
 	
@@ -32,7 +30,7 @@ public class AddPublisherServlet extends HttpServlet {
 		boolean status = false;
 		List<Publisher> list;
 		try {
-			list = dao.displayPubId();
+			list = dao.findAll();
 		
 			for (Publisher pub : list) {
 				String name=pub.getPubName();
@@ -53,11 +51,11 @@ public class AddPublisherServlet extends HttpServlet {
 		}
 		else {
 			System.out.println(p);
-			dao.addPublisher(p);
+			dao.save(p);
 			response.sendRedirect("sort.jsp");
 		}
 
-	} catch (Exception e) {
+		} catch (DBException e) {
 		
 		e.printStackTrace();
 	}

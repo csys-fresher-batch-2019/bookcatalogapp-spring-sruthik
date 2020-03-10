@@ -15,42 +15,34 @@ import com.sruthi.bookcatalogapp.service.UserService;
 @SuppressWarnings("serial")
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String mail = request.getParameter("usermail");
 		String password = request.getParameter("password");
 		boolean msg = false;
-		
+
 		Users u = new Users();
-		System.out.println("Enter user mailId: "+mail);
+		System.out.println("Enter user mailId: " + mail);
 		u.setUserMailId(mail);
-		System.out.println("Enter password : "+password);
+		System.out.println("Enter password : " + password);
 		u.setSetPassword(password);
-		
-		try
-		{
-		msg = UserService.login(u);
-		System.out.println(msg);
-		}
-		catch(Exception e) {
+
+		try {
+			msg = UserService.login(u);
+			System.out.println(msg);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(msg) {
+		if (msg) {
 			response.sendRedirect("sort.jsp");
-		}
-		else
-		{
+		} else {
 			request.setAttribute("errorMessage", "Invalid credentials");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 			dispatcher.forward(request, response);
-			
+
 		}
-		
-			
-		
-		
-		
-		
+
 	}
 
 }

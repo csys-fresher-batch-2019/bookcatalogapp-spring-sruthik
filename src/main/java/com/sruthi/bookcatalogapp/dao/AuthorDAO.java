@@ -7,9 +7,9 @@ import com.sruthi.bookcatalogapp.domain.Author;
 import com.sruthi.bookcatalogapp.exception.DBException;
 
 public interface AuthorDAO {
-	void addAuthor( Author author) throws DBException;
-	List<Author> displayNumberOfAuthors() throws DBException;
-	void updateAuthor(Author author) throws DBException;
-	void deleteAuthor(int authorId) throws DBException ;
+	void save( Author author) throws DBException;
+	List<Author> findAll() throws DBException;
+	void update(Author author) throws DBException;
+	void delete(int authorId) throws DBException ;
 	
 }

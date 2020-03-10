@@ -23,7 +23,7 @@ public class CourseTitleImpl implements CourseTitleDAO {
 	private static final Logger logger = LoggerFactory.getLogger(CourseTitleImpl.class);
 
 	@Override
-	public void addCourseTitle(CourseTitles course) throws DBException {
+	public void save(CourseTitles course) throws DBException {
 
 		String sql = "insert into course_titles(course_id,title_id)values(?,?)";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -32,7 +32,7 @@ public class CourseTitleImpl implements CourseTitleDAO {
 			pst.setInt(2, course.getTitleId());
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows inserted:" + rows);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 
 			throw new DBException(ErrorConstant.INVALID_ADD);
 		}
@@ -40,7 +40,7 @@ public class CourseTitleImpl implements CourseTitleDAO {
 	}
 
 	@Override
-	public void deleteCourseTitle(int courseId) {
+	public void delete(int courseId) {
 
 		String sql = "Delete from course_titles where course_id = ?";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -55,7 +55,7 @@ public class CourseTitleImpl implements CourseTitleDAO {
 
 	}
 
-	public void updateCourseTitle(CourseTitles course) {
+	public void update(CourseTitles course) {
 
 		String sql = "Update course_titles set course_id = ? where title_id = ?";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -72,7 +72,7 @@ public class CourseTitleImpl implements CourseTitleDAO {
 	}
 
 	@Override
-	public List<CourseTitles> displayCourseTitles() {
+	public List<CourseTitles> findAll() {
 
 		List<CourseTitles> list = new ArrayList<>();
 		String sql = "select course_id,title_id from course_titles";

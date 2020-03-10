@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sruthi.bookcatalogapp.domain.Users;
 
+@SuppressWarnings("serial")
 @WebServlet("/AdminServlet")
 public class AdminServlet extends HttpServlet {
 	

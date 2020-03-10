@@ -16,33 +16,27 @@ import com.sruthi.bookcatalogapp.dao.TitleDAO;
 import com.sruthi.bookcatalogapp.domain.Title;
 import com.sruthi.bookcatalogapp.exception.DBException;
 
-
-
 @SuppressWarnings("serial")
 @WebServlet("/ViewTitleByCourse")
 public class ViewTitleByCourse extends HttpServlet {
 	@Autowired
-	TitleDAO dao ;
-		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			    
-				String courseId = request.getParameter("CourseId");
-				
-					int id = Integer.valueOf(courseId);
-					try {
-						List<Title> list = dao.displayTitleForCourseId(id);
-						request.setAttribute("output", list);
-						RequestDispatcher dispatcher = request.getRequestDispatcher("CourseId.jsp");
-						dispatcher.forward(request, response);
-					} catch (DBException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-		
-				
-			
-			}
-			
-	
+	TitleDAO dao;
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
+		String courseId = request.getParameter("CourseId");
+
+		int id = Integer.valueOf(courseId);
+		try {
+			List<Title> list = dao.findByCourseId(id);
+			request.setAttribute("output", list);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("CourseId.jsp");
+			dispatcher.forward(request, response);
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

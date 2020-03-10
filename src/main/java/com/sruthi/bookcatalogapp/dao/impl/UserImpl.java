@@ -3,6 +3,7 @@ package com.sruthi.bookcatalogapp.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import com.sruthi.bookcatalogapp.util.ConnectionUtil;
 public class UserImpl implements UserDAO {
 	private static final Logger logger = LoggerFactory.getLogger(UserImpl.class);
 	@Override
-	public List<Users> displayUsers() throws DBException {
+	public List<Users> findAll() throws DBException {
 		List<Users> list = new ArrayList<>();
 		String sql = "Select * from Users";
 		
@@ -45,7 +46,7 @@ public class UserImpl implements UserDAO {
 				list.add(user);
 				
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			
 			logger.debug(e.getMessage());
 			throw new DBException(ErrorConstant.INVALID_SELECT);
@@ -54,7 +55,7 @@ public class UserImpl implements UserDAO {
 	}
 
 	@Override
-	public int addUser(Users user) throws DBException {
+	public int save(Users user) throws DBException {
 			int rows = 0;
 			String sql = "insert into Users(user_name,user_mail_id,set_password,confirm_password,ph_no)values(?,?,?,?,?)";
 			
@@ -68,7 +69,7 @@ public class UserImpl implements UserDAO {
 				
 				 rows = pst.executeUpdate();
 				logger.info("No of rows inserted:"+rows);
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				
 				
 				logger.debug(e.getMessage());

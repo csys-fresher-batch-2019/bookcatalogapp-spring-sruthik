@@ -1,4 +1,5 @@
 package com.sruthi.bookcatalogapp.servlet;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,8 +18,9 @@ import com.sruthi.bookcatalogapp.factory.DAOFactory;
 @SuppressWarnings("serial")
 @WebServlet("/AddTitleServlet")
 public class AddTitleServlet extends HttpServlet {
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String authorId = request.getParameter("authorId");
 		int id = Integer.valueOf(authorId);
 		String pubId = request.getParameter("pubId");
@@ -47,15 +49,14 @@ public class AddTitleServlet extends HttpServlet {
 		t.setVersionNumber(v);
 		t.setPrice(p);
 		TitleDAO dao = DAOFactory.getTitleDAO();
-		
+
 		boolean status = false;
 		List<Title> list;
 		try {
-			list = dao.displayTitleWithPrice();
-		
-		
+			list = dao.findAll();
+
 			for (Title ti : list) {
-				
+
 				int pub = ti.getPubId();
 				int author = ti.getAuthorId();
 				int sub = ti.getSubId();
@@ -63,34 +64,30 @@ public class AddTitleServlet extends HttpServlet {
 				int pri = ti.getPrice();
 				int version1 = ti.getVersionNumber();
 				LocalDate d = ti.getPubDate();
-				
-				if (pub == id1 && author == id && sub == id2 && tit.equals(title) && pri == p && version1 == v && d.equals(date)) {
-					
+
+				if (pub == id1 && author == id && sub == id2 && tit.equals(title) && pri == p && version1 == v
+						&& d.equals(date)) {
+
 					status = true;
-				
-			}
+
+				}
 			}
 			System.out.println(status);
-		if(status)
-		{
-			request.setAttribute("errorMessage2", "Title already exists");
-			RequestDispatcher dispatcher2 = request.getRequestDispatcher("AddTitles.jsp");
-			dispatcher2.forward(request, response);
-		}
-		else {
-			
-			dao.addTitle(t);
-			response.sendRedirect("sort.jsp");
-		}
+			if (status) {
+				request.setAttribute("errorMessage2", "Title already exists");
+				RequestDispatcher dispatcher2 = request.getRequestDispatcher("AddTitles.jsp");
+				dispatcher2.forward(request, response);
+			} else {
+
+				dao.save(t);
+				response.sendRedirect("sort.jsp");
+			}
 		}
 
-	 catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+		catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-			
 	}
 }
-
-

@@ -16,26 +16,28 @@ import com.sruthi.bookcatalogapp.dao.AuthorDAO;
 import com.sruthi.bookcatalogapp.domain.Author;
 
 import com.sruthi.bookcatalogapp.exception.DBException;
+
 @SuppressWarnings("serial")
 @WebServlet("/ViewAuthors")
-public class ViewAuthors extends HttpServlet{
+public class ViewAuthors extends HttpServlet {
 	@Autowired
 	AuthorDAO dao;
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		try {
-			List<Author> list = dao.displayNumberOfAuthors();
+			List<Author> list = dao.findAll();
 			System.out.println(list);
 			request.setAttribute("output", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("listByAuthors.jsp");
 			dispatcher.forward(request, response);
-		
+
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 	}
 
 }

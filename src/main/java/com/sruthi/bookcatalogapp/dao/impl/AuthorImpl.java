@@ -1,14 +1,12 @@
 package com.sruthi.bookcatalogapp.dao.impl;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -25,7 +23,7 @@ public class AuthorImpl implements AuthorDAO {
 	private static final Logger logger = LoggerFactory.getLogger(AuthorImpl.class);
 
 	@Override
-	public void addAuthor(Author author)throws DBException {
+	public void save(Author author)throws DBException {
 		String sql = "insert into authors1(author_name,author_mail_id,author_ph) values(?,?,?)";
 
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -44,7 +42,7 @@ public class AuthorImpl implements AuthorDAO {
 
 	}
 
-	public List<Author> displayNumberOfAuthors() throws DBException {
+	public List<Author> findAll() throws DBException {
 		List<Author> a = new ArrayList<>();
 		String sql = "select author_id,author_name,author_mail_id,author_ph from authors1";
 
@@ -65,7 +63,7 @@ public class AuthorImpl implements AuthorDAO {
 					a.add(author);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			
 			logger.debug(e.getMessage());
 			throw new DBException(ErrorConstant.INVALID_SELECT);
@@ -74,7 +72,7 @@ public class AuthorImpl implements AuthorDAO {
 		return a;
 	}
 
-	public void updateAuthor(Author author) throws DBException {
+	public void update(Author author) throws DBException {
 		String sql = "update authors1 set author_mail_id = ?,author_ph = ? where author_id = ?";
 
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -85,7 +83,7 @@ public class AuthorImpl implements AuthorDAO {
 
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows updated:" + rows);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			
 			logger.debug(e.getMessage());
 			throw new DBException(ErrorConstant.INVALID_SELECT);
@@ -93,7 +91,7 @@ public class AuthorImpl implements AuthorDAO {
 
 	}
 
-	public void deleteAuthor(int authorId) throws DBException {
+	public void delete(int authorId) throws DBException {
 		String sql = "Delete authors1 where author_id = ?";
 
 		try (Connection connection = ConnectionUtil.getConnection();
