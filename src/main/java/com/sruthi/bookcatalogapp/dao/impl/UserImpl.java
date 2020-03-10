@@ -1,21 +1,20 @@
 package com.sruthi.bookcatalogapp.dao.impl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-
 import com.sruthi.bookcatalogapp.dao.UserDAO;
 import com.sruthi.bookcatalogapp.domain.Users;
 import com.sruthi.bookcatalogapp.exception.DBException;
-import com.sruthi.bookcatalogapp.exception.ErrorConstant;
 import com.sruthi.bookcatalogapp.util.ConnectionUtil;
 
 @Repository
@@ -24,7 +23,7 @@ public class UserImpl implements UserDAO {
 	@Override
 	public List<Users> findAll() throws DBException {
 		List<Users> list = new ArrayList<>();
-		String sql = "Select * from Users";
+		String sql = "Select user_name,user_mail_id,set_password,confirm_password,ph_no from Users";
 		
 	    try {
 	    	Connection connection = ConnectionUtil.getConnection();
@@ -49,7 +48,7 @@ public class UserImpl implements UserDAO {
 		} catch (SQLException e) {
 			
 			logger.debug(e.getMessage());
-			throw new DBException(ErrorConstant.INVALID_SELECT);
+			throw new DBException("Unable to display User");
 		}
 		return list;
 	}
@@ -70,15 +69,40 @@ public class UserImpl implements UserDAO {
 				 rows = pst.executeUpdate();
 				logger.info("No of rows inserted:"+rows);
 			} catch (SQLException e) {
-				
-				
 				logger.debug(e.getMessage());
-				throw new DBException(ErrorConstant.INVALID_ADD);
+				throw new DBException("Unable to add User");
 			}
 			return rows;
 		}
 	
-
+	public boolean login(Users user) throws DBException {
+		boolean result = false;
+		try(Connection con = ConnectionUtil.getConnection();CallableStatement stmt=con.prepareCall("{call login_procedure(?,?,?)}")) {
+			stmt.setString(1,user.getUserMailId());
+			stmt.setString(2, user.getSetPassword());
+			stmt.registerOutParameter(3, Types.VARCHAR);
+			int executeUpdate = stmt.executeUpdate();
+			System.out.println("call:" + executeUpdate);
+			String status=stmt.getString(3);
+			System.out.println(status);
+			if(status.equals("Login successful")) {
+			
+			logger.debug("Logged In");
+			result =  true;
+             }
+			else {
+				logger.debug("Logged out");
+			}
+		} catch (Exception e) {
+			
+			
+			logger.error(e.getMessage());
+			throw new DBException("Unable to add User");
+			
+		}
+		return result;
+	}
+	
 	}
 	
 

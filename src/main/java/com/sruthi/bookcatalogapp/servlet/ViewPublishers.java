@@ -21,14 +21,13 @@ public class ViewPublishers extends HttpServlet {
 	@Autowired
 	PublisherDAO dao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		try {
 			List<Publisher> list = dao.findAll();
+			System.out.println(list);
 			request.setAttribute("output", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("listByPublishers.jsp");
 			dispatcher.forward(request, response);
 		} catch (DBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -17,8 +17,8 @@
 <body>
 <c:forEach items="${output}" var="book">
 <tr>
-	<td>${book.subId}</td>
-	<td><a href= "Subject?sub_name=${book.subName}">${book.subName}</a></td>
+	<td>${book.id}</td>
+	<td><a href= "Subject?sub_name=${book.name}">${book.name}</a></td>
 	
 </c:forEach>
 <tbody>

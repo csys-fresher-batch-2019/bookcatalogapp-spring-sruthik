@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.sruthi.bookcatalogapp.dao.AuthorDAO;
 import com.sruthi.bookcatalogapp.domain.Author;
 import com.sruthi.bookcatalogapp.exception.DBException;
-import com.sruthi.bookcatalogapp.exception.ErrorConstant;
+
 import com.sruthi.bookcatalogapp.util.ConnectionUtil;
 
 @Repository
@@ -28,14 +28,14 @@ public class AuthorImpl implements AuthorDAO {
 
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql)) {
-			pst.setString(1, author.getAuthorName());
-			pst.setString(2, author.getAuthorMailId());
-			pst.setLong(3, author.getAuthorPhNo());
+			pst.setString(1, author.getName());
+			pst.setString(2, author.getMailId());
+			pst.setLong(3, author.getPhoneNumber());
 			int rows = pst.executeUpdate();
 			logger.info("No of rows inserted:" + rows);
 		} catch (SQLException e) {
 			logger.debug(e.getMessage());
-			throw new DBException(ErrorConstant.INVALID_ADD);
+			throw new DBException("Unable to add");
 
 
 		}
@@ -54,19 +54,17 @@ public class AuthorImpl implements AuthorDAO {
 					String authorMailId = rs.getString("author_mail_id");
 					long authorPhNo = rs.getLong("author_ph");
 					Author author = new Author();
-					author.setAuthorId(authorId);
-					author.setAuthorName(authorName);
-					author.setAuthorMailId(authorMailId);
-					author.setAuthorPhNo(authorPhNo);
-					logger.debug("Author-Id : " + authorId + "Author name : " + authorName + "\nAuthor Mail-id : "
-							+ authorMailId + "\nAuthor Ph-no : " + authorPhNo);
+					author.setId(authorId);
+					author.setName(authorName);
+					author.setMailId(authorMailId);
+					author.setPhoneNumber(authorPhNo);
 					a.add(author);
 				}
 			}
 		} catch (SQLException e) {
 			
 			logger.debug(e.getMessage());
-			throw new DBException(ErrorConstant.INVALID_SELECT);
+			throw new DBException("Unable to display");
 		}
 
 		return a;
@@ -77,16 +75,16 @@ public class AuthorImpl implements AuthorDAO {
 
 		try (Connection connection = ConnectionUtil.getConnection();
 				PreparedStatement pst = connection.prepareStatement(sql)) {
-			pst.setString(1, author.getAuthorMailId());
-			pst.setLong(2, author.getAuthorPhNo());
-			pst.setInt(3, author.getAuthorId());
+			pst.setString(1, author.getMailId());
+			pst.setLong(2, author.getPhoneNumber());
+			pst.setInt(3, author.getId());
 
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows updated:" + rows);
 		} catch (SQLException e) {
 			
 			logger.debug(e.getMessage());
-			throw new DBException(ErrorConstant.INVALID_SELECT);
+			throw new DBException("Unable to update");
 		}
 
 	}
@@ -102,7 +100,7 @@ public class AuthorImpl implements AuthorDAO {
 		} catch (SQLException e) {
 			
 			logger.debug(e.getMessage());
-			throw new DBException(ErrorConstant.INVALID_DELETE);
+			throw new DBException("Unable to delete");
 		}
 
 	}

@@ -71,7 +71,7 @@ public class RegisterUserServlet extends HttpServlet {
 			} catch (DBException e) {
 				e.printStackTrace();
 			} catch (ServiceException e) {
-				e.printStackTrace();
+				request.setAttribute("errorMessage1", e.getMessage());
 			}
 		} else {
 

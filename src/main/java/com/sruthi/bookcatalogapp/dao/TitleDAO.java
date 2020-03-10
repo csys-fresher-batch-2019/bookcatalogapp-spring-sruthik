@@ -16,11 +16,9 @@ public interface TitleDAO {
 	void delete(int titleId) throws DBException;
 	List<Title> findByCourseId(int courseId) throws DBException;
 	List<Title> findByYear(LocalDate pubDate) throws DBException;
-	List<Title> findByPublisherCount()throws DBException;
-	List<Title> findByRecentBooks() throws DBException;
-	List<Title> findByPublisherId(int pubId)throws DBException;
-	List<Title> findByPublisherName(String pubName)throws DBException;
+	List<Title> findRecentBooks() throws DBException;
 	List<Title> findByAuthorName(String authorName)throws DBException;
 	List<Title> findBySubjectName(String subName)throws DBException;
+	List<Title> findByPublisherName(String pubname) throws DBException;
 	
 }

@@ -1,42 +1,17 @@
 package com.sruthi.bookcatalogapp.domain;
 
-public class Author{
-	private int authorId;
-	private String authorName;
-	private String authorMailId;
-	public int getAuthorId() {
-		return authorId;
-	}
-	public void setAuthorId(int authorId) {
-		this.authorId = authorId;
-	}
-	public String getAuthorMailId() {
-		return authorMailId;
-	}
-	public void setAuthorMailId(String authorMailId) {
-		this.authorMailId = authorMailId;
-	}
+import lombok.Data;
 
-	private long authorPhNo;
-	public long getAuthorPhNo() {
-		return authorPhNo;
-	}
-	public void setAuthorPhNo(long authorPhNo) {
-		
-			
-		this.authorPhNo = authorPhNo;
-	}
-	public String getAuthorName() {
-		return authorName;
-	}
-	public void setAuthorName(String authorName) {
-		this.authorName = authorName;
-	}
-	
+@Data
+public class Author {
+	private int id;
+	private String name;
+	private String mailId;
+	private long phoneNumber;
+
 	@Override
 	public String toString() {
-		return "Authors [authorId=" + authorId + ", authorName=" + authorName + ", authorMailId=" + authorMailId
-				+ ", authorPhNo=" + authorPhNo + "]";
+		return "Author [id=" + id + ", name=" + name + ", mailId=" + mailId + ", phoneNumber=" + phoneNumber + "]";
 	}
-	
+
 }

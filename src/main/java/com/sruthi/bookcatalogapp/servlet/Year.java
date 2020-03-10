@@ -31,7 +31,7 @@ public class Year extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("year1.jsp");
 			dispatcher.forward(request, response);
 		} catch (DBException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

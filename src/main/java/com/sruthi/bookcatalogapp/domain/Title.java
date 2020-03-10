@@ -2,6 +2,8 @@ package com.sruthi.bookcatalogapp.domain;
 
 import java.time.LocalDate;
 
+import lombok.Data;
+@Data
 public class Title {
 @Override
 	public int hashCode() {
@@ -9,10 +11,10 @@ public class Title {
 		int result = 1;
 		result = prime * result + authorId;
 		result = prime * result + price;
-		result = prime * result + ((pubDate == null) ? 0 : pubDate.hashCode());
-		result = prime * result + pubId;
-		result = prime * result + subId;
-		result = prime * result + titleId;
+		result = prime * result + ((publishedDate == null) ? 0 : publishedDate.hashCode());
+		result = prime * result + publisherId;
+		result = prime * result + subjectId;
+		result = prime * result + id;
 		result = prime * result + ((titleName == null) ? 0 : titleName.hashCode());
 		result = prime * result + versionNumber;
 		return result;
@@ -30,16 +32,16 @@ public class Title {
 			return false;
 		if (price != other.price)
 			return false;
-		if (pubDate == null) {
-			if (other.pubDate != null)
+		if (publishedDate == null) {
+			if (other.publishedDate != null)
 				return false;
-		} else if (!pubDate.equals(other.pubDate))
+		} else if (!publishedDate.equals(other.publishedDate))
 			return false;
-		if (pubId != other.pubId)
+		if (publisherId != other.publisherId)
 			return false;
-		if (subId != other.subId)
+		if (subjectId != other.subjectId)
 			return false;
-		if (titleId != other.titleId)
+		if (id != other.id)
 			return false;
 		if (titleName == null) {
 			if (other.titleName != null)
@@ -50,69 +52,20 @@ public class Title {
 			return false;
 		return true;
 	}
-private int titleId;
-private int pubId;
-private int subId;
+private int id;
+private int publisherId;
+private int subjectId;
 private int authorId;
-private LocalDate pubDate;
+private LocalDate publishedDate;
 private String titleName;
 private int versionNumber;
 private int price;
-public int getTitleId() {
-	return titleId;
-}
-public void setTitleId(int titleId) {
-	this.titleId = titleId;
-}
-public int getPubId() {
-	return pubId;
-}
-public void setPubId(int pubId) {
-	this.pubId = pubId;
-}
-public int getSubId() {
-	return subId;
-}
-public void setSubId(int subId) {
-	this.subId = subId;
-}
-public int getAuthorId() {
-	return authorId;
-}
-public void setAuthorId(int authorId) {
-	this.authorId = authorId;
-}
-public LocalDate getPubDate() {
-	return pubDate;
-}
-public void setPubDate(LocalDate pubDate) {
-	this.pubDate = pubDate;
-}
-public String getTitle() {
-	return titleName;
-}
-public void setTitle(String title) {
-	this.titleName = title;
-}
-public int getVersionNumber() {
-	return versionNumber;
-}
-public void setVersionNumber(int versionNumber) {
-	this.versionNumber = versionNumber;
-}
-public int getPrice() {
-	return price;
-}
-public void setPrice(int price) {
-	this.price = price;
-}
+
 @Override
 public String toString() {
-	return "Title [titleId=" + titleId + ", pubId=" + pubId + ", subId=" + subId + ", authorId=" + authorId
-			+ ", pubDate=" + pubDate + ", titleName=" + titleName + ", versionNumber=" + versionNumber + ", price="
-			+ price + "]";
+	return "Title [id=" + id + ", publisherId=" + publisherId + ", subjectId=" + subjectId + ", authorId=" + authorId
+			+ ", publishedDate=" + publishedDate + ", titleName=" + titleName + ", versionNumber=" + versionNumber
+			+ ", price=" + price + "]";
 }
-
-
 
 }

@@ -2,16 +2,20 @@ package com.sruthi.bookcatalogapp.servlet;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.sruthi.bookcatalogapp.dao.AuthorDAO;
 import com.sruthi.bookcatalogapp.domain.Author;
 import com.sruthi.bookcatalogapp.exception.DBException;
+import com.sruthi.bookcatalogapp.exception.ServiceException;
 import com.sruthi.bookcatalogapp.factory.DAOFactory;
+import com.sruthi.bookcatalogapp.service.UserService;
 
 @SuppressWarnings("serial")
 @WebServlet("/AddAuthorServlet")
@@ -23,18 +27,18 @@ public class AddAuthorServlet extends HttpServlet {
 		String authorPhNo = request.getParameter("authorPhNo");
 		long ph = Long.valueOf(authorPhNo);
 		Author a = new Author();
-		a.setAuthorName(authorName);
-		a.setAuthorMailId(authorMail);
-		a.setAuthorPhNo(ph);
+		a.setName(authorName);
+		a.setMailId(authorMail);
+		a.setPhoneNumber(ph);
 		AuthorDAO dao = DAOFactory.getAuthorDAO();
 		boolean status = false;
 		List<Author> list;
 		try {
 			list = dao.findAll();
 			for (Author au : list) {
-				String name = au.getAuthorName();
-				String mail = au.getAuthorMailId();
-				long no = au.getAuthorPhNo();
+				String name = au.getName();
+				String mail = au.getMailId();
+				long no = au.getPhoneNumber();
 				if (name.equals(authorName) || mail.equals(authorMail) || no == ph) {
 					status = true;
 				}
@@ -45,12 +49,15 @@ public class AddAuthorServlet extends HttpServlet {
 				RequestDispatcher dispatcher2 = request.getRequestDispatcher("AddAuthors.jsp");
 				dispatcher2.forward(request, response);
 			} else {
-				dao.save(a);
+				UserService.addAuthor(a);
 				response.sendRedirect("sort.jsp");
 			}
 
 		} catch (DBException e) {
-			// TODO Auto-generated catch block
+			
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			
 			e.printStackTrace();
 		}
 	}

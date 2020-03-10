@@ -34,7 +34,6 @@ public class ViewTitleByCourse extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("CourseId.jsp");
 			dispatcher.forward(request, response);
 		} catch (DBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -27,7 +27,6 @@ public class Publisher extends HttpServlet {
 			throws ServletException, IOException {
 		String pubname = request.getParameter("pub_name");
 		try {
-
 			List<Title> list = dao.findByPublisherName(pubname);
 			System.out.println(list);
 			request.setAttribute("output", list);

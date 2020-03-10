@@ -9,11 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.sruthi.bookcatalogapp.dao.TitleDAO;
 import com.sruthi.bookcatalogapp.domain.Title;
 import com.sruthi.bookcatalogapp.exception.DBException;
+import com.sruthi.bookcatalogapp.exception.ServiceException;
 import com.sruthi.bookcatalogapp.factory.DAOFactory;
+import com.sruthi.bookcatalogapp.service.UserService;
 
 @SuppressWarnings("serial")
 @WebServlet("/AddTitleServlet")
@@ -42,10 +43,10 @@ public class AddTitleServlet extends HttpServlet {
 		System.out.println(p);
 		Title t = new Title();
 		t.setAuthorId(id);
-		t.setPubId(id1);
-		t.setSubId(id2);
-		t.setPubDate(date);
-		t.setTitle(title);
+		t.setId(id1);
+		t.setSubjectId(id2);
+		t.setPublishedDate(date);
+		t.setTitleName(title);
 		t.setVersionNumber(v);
 		t.setPrice(p);
 		TitleDAO dao = DAOFactory.getTitleDAO();
@@ -57,13 +58,13 @@ public class AddTitleServlet extends HttpServlet {
 
 			for (Title ti : list) {
 
-				int pub = ti.getPubId();
+				int pub = ti.getPublisherId();
 				int author = ti.getAuthorId();
-				int sub = ti.getSubId();
-				String tit = ti.getTitle();
+				int sub = ti.getSubjectId();
+				String tit = ti.getTitleName();
 				int pri = ti.getPrice();
 				int version1 = ti.getVersionNumber();
-				LocalDate d = ti.getPubDate();
+				LocalDate d = ti.getPublishedDate();
 
 				if (pub == id1 && author == id && sub == id2 && tit.equals(title) && pri == p && version1 == v
 						&& d.equals(date)) {
@@ -79,13 +80,14 @@ public class AddTitleServlet extends HttpServlet {
 				dispatcher2.forward(request, response);
 			} else {
 
-				dao.save(t);
+				UserService.addTitle(t);
 				response.sendRedirect("sort.jsp");
 			}
 		}
 
 		catch (DBException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
 

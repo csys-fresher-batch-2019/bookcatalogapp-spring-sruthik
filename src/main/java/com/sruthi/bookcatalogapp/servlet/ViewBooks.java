@@ -23,7 +23,6 @@ public class ViewBooks extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
-
 			List<Title> list = dao.findAll();
 			request.setAttribute("output", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("viewBooks.jsp");

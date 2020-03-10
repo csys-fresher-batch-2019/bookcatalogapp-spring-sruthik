@@ -1,7 +1,10 @@
 package com.sruthi.bookcatalogapp.domain;
 
+import lombok.Data;
+
+@Data
 public class Users {
-     @Override
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -12,6 +15,7 @@ public class Users {
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -45,47 +49,17 @@ public class Users {
 			return false;
 		return true;
 	}
+
 	private String userName;
-     private String userMailId;
-     private String setPassword;
-     private String confirmPassword;
-     private long phNo;
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public String getUserMailId() {
-		return userMailId;
-	}
-	public void setUserMailId(String userMailId) {
-		this.userMailId = userMailId;
-	}
-	public String getSetPassword() {
-		return setPassword;
-	}
-	public void setSetPassword(String setPassword) {
-		this.setPassword = setPassword;
-	}
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-	public long getPhNo() {
-		return phNo;
-	}
-	public void setPhNo(long phNo) {
-		this.phNo = phNo;
-	}
+	private String userMailId;
+	private String setPassword;
+	private String confirmPassword;
+	private long phNo;
+
 	@Override
 	public String toString() {
 		return "Users [userName=" + userName + ", userMailId=" + userMailId + ", setPassword=" + setPassword
 				+ ", confirmPassword=" + confirmPassword + ", phNo=" + phNo + "]";
 	}
-     
-	
-	
+
 }

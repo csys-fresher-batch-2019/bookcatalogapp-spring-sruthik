@@ -30,7 +30,7 @@ public class SearchByServlet extends HttpServlet {
 				System.out.println("Recent Books are...");
 
 				TitleDAO dao = DAOFactory.getTitleDAO();
-				List<Title> list = dao.findByRecentBooks();
+				List<Title> list = dao.findRecentBooks();
 				request.setAttribute("RECENT_BOOKS", list);
 				nextPage = "RecentBooks";
 			} catch (Exception e) {

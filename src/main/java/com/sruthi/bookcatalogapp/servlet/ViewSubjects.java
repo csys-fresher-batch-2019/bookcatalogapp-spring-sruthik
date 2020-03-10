@@ -32,7 +32,6 @@ public class ViewSubjects extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("Subjects.jsp");
 			dispatcher.forward(request, response);
 		} catch (DBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

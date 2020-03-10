@@ -11,25 +11,29 @@
 <jsp:include page="Titles.jsp"></jsp:include>
 </br>
 <center>
-<table border = "1" style="font-size: 25">
-<thead><th>Author-id</th><th>Author-Name</th><th>Author-MailId</th><th>Author-PhoneNo</th></thead>
-<center>
+	<table border="1" style="font-size: 25">
+		<thead>
+			<th>Author-id</th>
+			<th>Author-Name</th>
+			<th>Author-MailId</th>
+			<th>Author-PhoneNo</th>
+		</thead>
+		<center>
 
-<body>
-<c:forEach items="${output}" var="book">
-<tr>
-	<td>${book.authorId}</td>
-	<td><a href= "Author?author_name=${book.authorName}">${book.authorName}</a></td>
-	<td>${book.authorMailId}</td>
-	<td>${book.authorPhNo}</td>
-</c:forEach>
+			<body>
+				<c:forEach items="${output}" var="book">
+					<tr>
+						<td>${book.id}</td>
+						<td><a href="Author?author_name=${book.name}">${book.name}</a></td>
+						<td>${book.mailId}</td>
+						<td>${book.phoneNumber}</td>
+				</c:forEach>
+			<tbody>
 
-<tbody>
 
+				</body>
 
-</body>
-
-</tbody>
-</table>
+			</tbody>
+	</table>
 </center>
 </html>

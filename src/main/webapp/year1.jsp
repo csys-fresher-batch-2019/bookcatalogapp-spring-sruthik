@@ -30,10 +30,10 @@ font-size: 25;
 <c:forEach items="${output}" var="book">
 <tr>
 	
-	<td>${book.pubId}</td>
+	<td>${book.publisherId}</td>
 	<td>${book.authorId}</td>
-	<td>${book.subId}</td>
-	<td>${book.title}</td>
+	<td>${book.subjectId}</td>
+	<td>${book.titleName}</td>
 	<td>${book.versionNumber}</td>
 	<td>${book.price}</td>
 	

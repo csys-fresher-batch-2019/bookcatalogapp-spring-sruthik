@@ -22,7 +22,6 @@ import com.sruthi.bookcatalogapp.exception.DBException;
 public class Author extends HttpServlet {
 	@Autowired
 	TitleDAO dao;
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String authorName = request.getParameter("author_name");

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import com.sruthi.bookcatalogapp.dao.CourseTitleDAO;
 import com.sruthi.bookcatalogapp.domain.CourseTitles;
 import com.sruthi.bookcatalogapp.exception.DBException;
-import com.sruthi.bookcatalogapp.exception.ErrorConstant;
 import com.sruthi.bookcatalogapp.util.ConnectionUtil;
 
 @Repository
@@ -33,14 +32,14 @@ public class CourseTitleImpl implements CourseTitleDAO {
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows inserted:" + rows);
 		} catch (SQLException e) {
-
-			throw new DBException(ErrorConstant.INVALID_ADD);
+			logger.debug(e.getMessage());
+			throw new DBException("Unable to add");
 		}
 
 	}
 
 	@Override
-	public void delete(int courseId) {
+	public void delete(int courseId) throws DBException {
 
 		String sql = "Delete from course_titles where course_id = ?";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -49,13 +48,13 @@ public class CourseTitleImpl implements CourseTitleDAO {
 			int rows = pst.executeUpdate();
 			logger.debug("No of rows deleted:" + rows);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			logger.debug(e.getMessage());
-		}
+			throw new DBException("Unable to delete");
 
+		}
 	}
 
-	public void update(CourseTitles course) {
+	public void update(CourseTitles course) throws DBException {
 
 		String sql = "Update course_titles set course_id = ? where title_id = ?";
 		try (Connection connection = ConnectionUtil.getConnection();
@@ -63,16 +62,16 @@ public class CourseTitleImpl implements CourseTitleDAO {
 			pst.setInt(1, course.getCourseId());
 			pst.setInt(2, course.getTitleId());
 			int rows = pst.executeUpdate();
-			logger.debug("No of rows deleted:" + rows);
+			logger.debug("No of rows updated:" + rows);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			logger.debug(e.getMessage());
+			throw new DBException("Unable to update");
 		}
 
 	}
 
 	@Override
-	public List<CourseTitles> findAll() {
+	public List<CourseTitles> findAll() throws DBException {
 
 		List<CourseTitles> list = new ArrayList<>();
 		String sql = "select course_id,title_id from course_titles";
@@ -89,8 +88,8 @@ public class CourseTitleImpl implements CourseTitleDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			logger.debug(e.getMessage());
+			throw new DBException("Unable to display");
 		}
 
 		return list;

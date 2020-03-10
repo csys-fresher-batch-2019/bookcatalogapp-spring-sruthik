@@ -34,7 +34,6 @@ public class ViewAuthors extends HttpServlet {
 			dispatcher.forward(request, response);
 
 		} catch (DBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -28,7 +28,7 @@ font-size: 30;
 <c:forEach items="${output}" var="book">
 <tr>
 	
-	<td>${book.title}</td>
+	<td>${book.titleName}</td>
 	<td>${book.versionNumber}</td>
 	<td>${book.price}</td>
 	

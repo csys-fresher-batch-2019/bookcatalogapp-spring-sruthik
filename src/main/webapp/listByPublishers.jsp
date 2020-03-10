@@ -12,10 +12,10 @@
 <c:forEach items="${output}" var="book">
 <tr>
 
-	<td>${book.pubId}</td>
-	<td><a href= "Publisher?pub_name=${book.pubName}">${book.pubName}</a></td>
-	<td>${book.pubMailId}</td>
-	<td>${book.pubPhNo}</td>
+	<td>${book.id}</td>
+	<td><a href= "Publisher?pub_name=${book.name}">${book.name}</a></td>
+	<td>${book.mailId}</td>
+	<td>${book.phoneNumber}</td>
 
 </c:forEach>
 
