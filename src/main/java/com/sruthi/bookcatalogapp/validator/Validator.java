@@ -32,6 +32,7 @@ public class Validator {
 				throw new ValidatorException("Phone-number cannot be blank/empty");
 			
 		}
+		
 	}
     
 }
