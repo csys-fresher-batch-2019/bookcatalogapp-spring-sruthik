@@ -5,10 +5,12 @@ import org.springframework.stereotype.Service;
 
 import com.sruthi.bookcatalogapp.dao.AuthorDAO;
 import com.sruthi.bookcatalogapp.dao.PublisherDAO;
+import com.sruthi.bookcatalogapp.dao.SubjectDAO;
 import com.sruthi.bookcatalogapp.dao.TitleDAO;
 import com.sruthi.bookcatalogapp.dao.UserDAO;
 import com.sruthi.bookcatalogapp.domain.Author;
 import com.sruthi.bookcatalogapp.domain.Publisher;
+import com.sruthi.bookcatalogapp.domain.Subject;
 import com.sruthi.bookcatalogapp.domain.Title;
 import com.sruthi.bookcatalogapp.domain.Users;
 import com.sruthi.bookcatalogapp.exception.DBException;
@@ -58,6 +60,10 @@ public class UserService {
 			throw new ServiceException(e.getMessage());
 		}
 		
+	}
+	public static void addSubject(Subject s)throws ServiceException,DBException{
+		SubjectDAO dao = DAOFactory.getSubjectDAO();
+			dao.save(s);
 	}
 
 }

@@ -35,7 +35,7 @@ public class Validator {
 			throw new ValidatorException("Phone-number cannot be blank/empty");
 
 		}
-		if (u.getSetPassword().equals(u.getConfirmPassword())) {
+		if (!u.getSetPassword().equals(u.getConfirmPassword())) {
 			throw new ValidatorException("Password Mismatch!!");
 		}
 

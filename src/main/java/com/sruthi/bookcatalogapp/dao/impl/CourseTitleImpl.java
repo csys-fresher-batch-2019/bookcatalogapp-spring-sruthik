@@ -50,8 +50,7 @@ public class CourseTitleImpl implements CourseTitleDAO {
 		} catch (SQLException e) {
 			logger.debug(e.getMessage());
 			throw new DBException("Unable to delete");
-
-		}
+		} 
 	}
 
 	public void update(CourseTitles course) throws DBException {

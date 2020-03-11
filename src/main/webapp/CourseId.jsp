@@ -1,7 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.sruthi.bookcatalogapp.domain.Title"%>
-<%@page import="java.util.List"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <title>CourseId</title>
@@ -26,13 +24,13 @@ font-size: 30;
 <c:forEach items="${output}" var="book">
 
  	<tr>
-	<td>${book.pubId}</td>
+	<td>${book.publisherId}</td>
 	<td>${book.authorId}</td>
-	<td>${book.subId}</td>
-	<td>${book.title}</td>
+	<td>${book.subjectId}</td>
+	<td>${book.titleName}</td>
 	<td>${book.price}</td>
 	<td>${book.versionNumber}</td>
-	<td>${book.pubDate}</td>
+	<td>${book.publishedDate}</td>
 
 </c:forEach>
 
