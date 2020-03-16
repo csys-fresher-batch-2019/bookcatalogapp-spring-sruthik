@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.sruthi.bookcatalogapp.dao.UserDAO;
 import com.sruthi.bookcatalogapp.domain.Users;
 import com.sruthi.bookcatalogapp.exception.DBException;
-import com.sruthi.bookcatalogapp.exception.ServiceException;
 import com.sruthi.bookcatalogapp.factory.DAOFactory;
 import com.sruthi.bookcatalogapp.service.UserService;
 
@@ -37,48 +36,40 @@ public class RegisterUserServlet extends HttpServlet {
 		u.setSetPassword(password);
 		u.setConfirmPassword(cpassword);
 		System.out.println(u);
-
-		boolean equals = password.equals(cpassword);
 		boolean status = false;
-		if (equals) {
-
-			System.out.println("Registered Successfully!!");
-			UserDAO dao = DAOFactory.getUserDAO();
-			List<Users> list;
 			try {
-				list = dao.findAll();
-				for (Users user : list) {
-					System.out.println(user);
-					String name = user.getUserName();
-					String mail = user.getUserMailId();
-					long ph = user.getPhNo();
-					if (name.equals(username) || mail.equals(mailId) || ph == phno) {
-						status = true;
-					}
-				}
-				System.out.println("Status:" + status);
-
+				status = validate(mailId,username,phno);
+				System.out.println("Status"+status);
 				if (status) {
-					request.setAttribute("errorMessage1", "Registered already!! Please login...");
-					RequestDispatcher dispatcher1 = request.getRequestDispatcher("reg.jsp");
-					dispatcher1.forward(request, response);
+					request.setAttribute("errorMessage", "Registered already!! Please login...");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("reg.jsp");
+					dispatcher.forward(request, response);
 				} else {
+					System.out.println(u);
 					UserService.registration(u);
-					System.out.println("Successfully added");
 					response.sendRedirect("sort.jsp");
 				}
 
-			} catch (DBException e) {
-				e.printStackTrace();
-			} catch (ServiceException e) {
-				request.setAttribute("errorMessage1", e.getMessage());
-			}
-		} else {
-
-			request.setAttribute("errorMessage", "Password mismatch Try Again!!");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("reg.jsp");
-			dispatcher.forward(request, response);
-
+			} catch (Exception e) {
+				request.setAttribute("errorMessage", e.getMessage());
+				RequestDispatcher dispatcher = request.getRequestDispatcher("reg.jsp");
+				dispatcher.forward(request, response);
+	}
 		}
+
+	private boolean validate(String mailId, String username, long phno) throws DBException {
+		boolean status = false;
+		UserDAO dao = DAOFactory.getUserDAO();
+		List<Users> list = dao.findAll();
+		for (Users user : list) {
+			String name = user.getUserName();
+			String mail = user.getUserMailId();
+			long ph = user.getPhNo();
+			if (name.equals(username) || mail.equals(mailId) || ph == phno) {
+				status = true;
+				break;
+			}
+		}
+		return status;
 	}
 }

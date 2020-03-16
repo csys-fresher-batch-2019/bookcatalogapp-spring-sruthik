@@ -35,53 +35,64 @@ public class Validator {
 			throw new ValidatorException("Phone-number cannot be blank/empty");
 
 		}
+		if (Long.toString(u.getPhNo()).length() != 10) {
+
+			throw new ValidatorException("Invalid Phone-number");
+
+		}
+
 		if (!u.getSetPassword().equals(u.getConfirmPassword())) {
+
 			throw new ValidatorException("Password Mismatch!!");
+
 		}
 
 	}
-	public static void validatePublisher(Publisher p) throws ValidatorException{
-		if(p.getName() == null ||"".equals(p.getName().trim())) {
+
+	public static void validatePublisher(Publisher p) throws ValidatorException {
+		if (p.getName() == null || "".equals(p.getName().trim())) {
 			throw new ValidatorException("Name cannot be blank/empty");
 		}
-		if(p.getMailId() == null ||"".equals(p.getMailId().trim())) {
+		if (p.getMailId() == null || "".equals(p.getMailId().trim())) {
 			throw new ValidatorException("Mail-Id cannot be blank/empty");
 		}
-		if(p.getPhoneNumber() == 0) {
+		if (p.getPhoneNumber() == 0) {
 			throw new ValidatorException("Phone-Number cannot be blank/empty");
 		}
 	}
-	public static void validateAuthor(Author a) throws ValidatorException{
-		if(a.getName() == null ||"".equals(a.getName().trim())) {
+
+	public static void validateAuthor(Author a) throws ValidatorException {
+		if (a.getName() == null || "".equals(a.getName().trim())) {
 			throw new ValidatorException("Name cannot be blank/empty");
 		}
-		if(a.getMailId() == null ||"".equals(a.getMailId().trim())) {
+		if (a.getMailId() == null || "".equals(a.getMailId().trim())) {
 			throw new ValidatorException("Mail-Id cannot be blank/empty");
 		}
-		if(a.getPhoneNumber() == 0) {
+		if (a.getPhoneNumber() == 0) {
 			throw new ValidatorException("Phone-Number cannot be blank/empty");
 		}
 	}
-	public static void validateTitle(Title t) throws ValidatorException{
-		if(t.getTitleName() == null ||"".equals(t.getTitleName().trim())) {
+
+	public static void validateTitle(Title t) throws ValidatorException {
+		if (t.getTitleName() == null || "".equals(t.getTitleName().trim())) {
 			throw new ValidatorException("Name cannot be blank/empty");
 		}
-		if(t.getAuthorId() == 0) {
+		if (t.getAuthorId() == 0) {
 			throw new ValidatorException("AuthorId is empty");
 		}
-		if(t.getPublisherId() == 0) {
+		if (t.getPublisherId() == 0) {
 			throw new ValidatorException("PublisherId is empty");
 		}
-		if(t.getSubjectId()== 0) {
+		if (t.getSubjectId() == 0) {
 			throw new ValidatorException("SubjectId is empty");
 		}
-		if(t.getVersionNumber() == 0) {
+		if (t.getVersionNumber() == 0) {
 			throw new ValidatorException("Version is empty");
 		}
-		if(t.getPublishedDate()==null){
+		if (t.getPublishedDate() == null) {
 			throw new ValidatorException("Published-Date is empty");
 		}
-		
+
 	}
-   
+
 }

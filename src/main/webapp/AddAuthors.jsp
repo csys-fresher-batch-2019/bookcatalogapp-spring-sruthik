@@ -11,7 +11,9 @@ font-family: cursive;
 font-size: 25;
 
 }
+
 </style>
+
 <center>
 <body background="assets/images/r1.jpg" class="b">
 <form action="AddAuthorServlet">

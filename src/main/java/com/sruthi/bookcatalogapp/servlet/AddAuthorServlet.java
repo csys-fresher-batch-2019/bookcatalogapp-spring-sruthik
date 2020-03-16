@@ -57,8 +57,10 @@ public class AddAuthorServlet extends HttpServlet {
 			
 			e.printStackTrace();
 		} catch (ServiceException e) {
+			request.setAttribute("errorMessage2", e.getMessage());
+			RequestDispatcher dispatcher2 = request.getRequestDispatcher("AddAuthors.jsp");
+			dispatcher2.forward(request, response);
 			
-			e.printStackTrace();
 		}
 	}
 

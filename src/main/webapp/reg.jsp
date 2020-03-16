@@ -21,14 +21,9 @@ background-attachment: fixed;
 <h2 class="a">Register</h2>
 <form action = "RegisterUserServlet" class="a">
 
-<c:if test="${not empty errorMessage1}">
-				<font color="red" style="font-style: normal" " class="a">${errorMessage1}</font>
+<c:if test="${not empty errorMessage}">
+				<font color="red" style="font-style: normal" " class="a">${errorMessage}</font>
 			</c:if>
-
-<c:if test="${not empty errormessage }">
-<font color="red"style="font-style: normal"" class="a">${errormessage} </font>
-</c:if>
-
 <br/>
 Enter username :<input type="text" name="username" required>
 <br/>
